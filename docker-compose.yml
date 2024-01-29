@@ -1,0 +1,92 @@
+version: "3.9"
+
+services:
+
+  backend:
+    build: ./backend
+    entrypoint: ["/app/startup.sh"]
+    ports:
+      - 8000:8000
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
+      - traefik.http.routers.api.entrypoints=web
+      - traefik.http.services.api.loadbalancer.server.port=8000
+    depends_on:
+      - db
+    volumes:
+      - ./backend/app:/app
+    restart: always
+    env_file:
+      - .env
+    networks:
+      - network1
+
+  frontend:
+    build:
+      context: ./frontend
+      target: build-stage
+    command: ["yarn", "dev"]
+    restart: always
+    volumes:
+      - ./frontend/app:/app
+      - /app/node_modules
+    networks:
+      - network1
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.frontend.entrypoints=web
+      - traefik.http.services.frontend.loadbalancer.server.port=5173
+
+  db:
+    image: mysql:8.2
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - ./data:/var/lib/mysql
+    restart: always
+    networks:
+      - network1
+
+  redis:
+    image: redis:latest
+    volumes:
+      - redis_data:/data
+    networks:
+      - network1
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    networks:
+      - network1
+
+  traefik:
+    image: traefik:2.10
+    command:
+      - --providers.docker=true
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.web.address=:80
+    ports:
+      - 80:80
+      - 8081:8081
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - network1
+
+networks:
+  network1:
+
+volumes:
+  redis_data:

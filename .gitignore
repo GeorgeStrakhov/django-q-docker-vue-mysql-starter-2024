@@ -1,0 +1,37 @@
+# Node dependencies
+/frontend/app/node_modules
+
+#front build
+/frontend/app/dist/
+/frontend/node_modules/
+
+# Python dependencies and environment
+/backend/*.pyc
+/backend/app/__pycache__
+__pycache__/
+.venv
+
+# https cert
+acme.json
+
+# supervisor stuff
+backend/app/supervisord.log
+backend/app/supervisord.pid
+
+# Environment variables
+.env
+
+# Docker volumes
+/data
+/redis_data
+/letsencrypt
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Installer logs
+pip-log.txt
+
+# sqlite database
+/backend/db.sqlite3
