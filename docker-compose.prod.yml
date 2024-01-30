@@ -13,7 +13,6 @@ services:
       - traefik.http.routers.api.entrypoints=websecure
       - traefik.http.routers.api.tls.certresolver=myresolver
       - traefik.http.services.api.loadbalancer.server.port=8000
-
     depends_on:
       - db
     volumes:

@@ -21,6 +21,9 @@ backend/app/supervisord.pid
 # Environment variables
 .env
 
+# Django static files
+/backend/app/staticfiles
+
 # Docker volumes
 /data
 /redis_data

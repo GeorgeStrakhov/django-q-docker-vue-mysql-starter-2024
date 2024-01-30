@@ -16,6 +16,9 @@ echo "MySQL is up - executing command"
 python manage.py migrate
 python create_superuser.py
 
+# Collect static files
+python manage.py collectstatic
+
 # Decide which server to run based on the ENV variable
 if [ "$ENV" = "development" ]; then
     echo "Starting Django development server"
