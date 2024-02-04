@@ -1,7 +1,8 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createPinia } from 'pinia';
 import App from './App.vue'
+import { router } from './router'
 
 //components that we will need globally
 import Button from "primevue/button";
@@ -28,12 +29,8 @@ import 'primevue/resources/primevue.min.css' //core css
 
 import Ripple from 'primevue/ripple';
 
-//app components
-import Landing from './components/Landing.vue'
-import NotFound from './components/NotFound.vue'
 
 import Loading from './components/Loading.vue'
-import Notes from './components/Notes.vue'
 
 //create the app
 const app = createApp(App)
@@ -60,18 +57,10 @@ app.directive('ripple', Ripple)
 app.component('Loading', Loading)
 
 //router
-const routes = [
-    { path: '/', name: 'Landing', component: Landing },
-    { path: '/notes', name: 'Notes', component: Notes },
-    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
-]
-
-const router = createRouter({
-    history: createWebHistory(),
-    routes
-})
-
 app.use(router)
+
+//store
+app.use(createPinia());
 
 app.use(PrimeVue, {ripple: true})
 app.mount('#app')

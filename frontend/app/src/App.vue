@@ -1,5 +1,5 @@
 <template>
-    <Toast :breakpoints="{'920px': {width: '100%', right: '0', left: '0'}}"/>
+    <Toaster />
     <div class="container">
         <Header />
         <router-view :key="$route.fullPath"></router-view>
@@ -11,11 +11,13 @@
 
     import Footer from './components/Footer.vue'
     import Header from './components/Header.vue'
+    import Toaster from './components/Toaster.vue'
 
     export default {
         components:{
             Footer,
-            Header
+            Header,
+            Toaster
         }
     }
 

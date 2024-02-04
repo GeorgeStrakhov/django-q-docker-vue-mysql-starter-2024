@@ -15,7 +15,7 @@
                 apiGet('test_data')
                     .then(response => {
                         console.log(response)
-                        showSuccess(this, response.result.message)
+                        showSuccess(response.result.message)
                     })
                     .catch(error => {
                         showError(this)
@@ -31,10 +31,10 @@
                 })
                     .then(response => {
                         console.log(response)
-                        showSuccess(this, response.result.message)
+                        showSuccess(response.result.message)
                     })
                     .catch(error => {
-                        showError(this)
+                        showError()
                     })
                     .finally(() => {
                         this.isLongLoading = false

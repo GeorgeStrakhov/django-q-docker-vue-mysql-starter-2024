@@ -16,8 +16,12 @@ echo "MySQL is up - executing command"
 python manage.py migrate
 python create_superuser.py
 
-# Collect static files
-python manage.py collectstatic
+# collect static files if not already collected
+if [ -d "staticfiles" ]; then
+    echo "Static files already collected"
+else
+    python manage.py collectstatic
+fi
 
 # Decide which server to run based on the ENV variable
 if [ "$ENV" = "development" ]; then
