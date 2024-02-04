@@ -4,7 +4,7 @@
 
 <script setup>
     import { onMounted, onBeforeUnmount } from 'vue';
-    import emitter from '@/helpers/eventBus';
+    import { eventBus } from '@/helpers/eventBus';
     import { useToast } from 'primevue/usetoast';
 
     const toast = useToast();
@@ -15,11 +15,11 @@
     };
 
     onMounted(() => {
-      emitter.on('toast', eventHandler);
+      eventBus.on('toast', eventHandler);
     });
 
     onBeforeUnmount(() => {
-      emitter.off('toast', eventHandler);
+      eventBus.off('toast', eventHandler);
     });
 
 </script>

@@ -1,5 +1,6 @@
 <template>
     <Toaster />
+    <GlobalLoading />
     <div class="container">
         <Header />
         <router-view :key="$route.fullPath"></router-view>
@@ -12,12 +13,14 @@
     import Footer from './components/Footer.vue'
     import Header from './components/Header.vue'
     import Toaster from './components/Toaster.vue'
+    import GlobalLoading from './components/GlobalLoading.vue'
 
     export default {
         components:{
             Footer,
             Header,
-            Toaster
+            Toaster,
+            GlobalLoading
         }
     }
 

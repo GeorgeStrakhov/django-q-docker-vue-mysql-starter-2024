@@ -1,5 +1,6 @@
 <script>
     import {apiGet, apiPost, showError, showSuccess} from '../helpers/api.js'
+    import { eventBus } from '@/helpers/eventBus';
 
     export default {
         data() {
@@ -26,6 +27,7 @@
             },
             longApiCall() {
                 this.isLongLoading = true
+                eventBus.emit('show-loading', 'Please wait for something long to finish')
                 apiPost('test_task', {
                     'query': 'long api call blah blah'
                 })
@@ -38,6 +40,7 @@
                     })
                     .finally(() => {
                         this.isLongLoading = false
+                        eventBus.emit('hide-loading')
                     })
             }
         }

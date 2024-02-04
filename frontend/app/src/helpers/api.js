@@ -1,6 +1,5 @@
 import axios from 'axios';
-import emitter from '@/helpers/eventBus';
-import { toRaw } from 'vue';
+import { eventBus } from '@/helpers/eventBus';
 
 //poll freq
 const pollFreq = 500; //every half a second
@@ -51,12 +50,12 @@ const apiGet = (url) => makeRequest('get', url);
 const showError = (error="something went wrong") => {
     console.log(error);
     const payload = {severity: 'error', summary: 'Sorry...', detail: error, life: 3000};
-    emitter.emit('toast', payload);
+    eventBus.emit('toast', payload);
 };
 
 const showSuccess = (message="it worked!") => {
     const payload = {severity: 'success', summary: 'Hooraay!', detail: message, life: 3000};
-    emitter.emit('toast', payload);
+    eventBus.emit('toast', payload);
 };
 
-export {apiPost, apiGet, showError, showSuccess};
+export { apiPost, apiGet, showError, showSuccess };

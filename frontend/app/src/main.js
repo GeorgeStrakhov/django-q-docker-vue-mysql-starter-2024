@@ -1,8 +1,9 @@
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import { createPinia } from 'pinia';
-import App from './App.vue'
-import { router } from './router'
+import App from '@/App.vue'
+import { router } from '@/router'
+import { eventBus } from '@/helpers/eventBus';
 
 //components that we will need globally
 import Button from "primevue/button";
@@ -30,7 +31,7 @@ import 'primevue/resources/primevue.min.css' //core css
 import Ripple from 'primevue/ripple';
 
 
-import Loading from './components/Loading.vue'
+import Loading from '@/components/Loading.vue'
 
 //create the app
 const app = createApp(App)
@@ -61,6 +62,7 @@ app.use(router)
 
 //store
 app.use(createPinia());
+
 
 app.use(PrimeVue, {ripple: true})
 app.mount('#app')
