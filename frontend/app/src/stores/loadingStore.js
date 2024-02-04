@@ -18,6 +18,7 @@ export const useLoadingStore = defineStore('loading', {
         // Method to hide the loading screen by setting isLoading to false
         hideLoading() {
             this.isLoading = false;
+            this.loadingMessage = 'Loading...';
         },
     },
 });
