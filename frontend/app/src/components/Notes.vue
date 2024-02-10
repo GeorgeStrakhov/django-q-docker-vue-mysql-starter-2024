@@ -34,10 +34,10 @@
                 .then(response => {
                     this.notes = response;
                     if (this.notes.length === 0) {
-                        showError(this, 'No notes found in the database. Please add some via the admin at /api/admin/.');
+                        showError('No notes found in the database. Please add some via the admin at /api/admin/.');
                     }
                 })
-                .catch(error => showError(this, error))
+                .catch(error => showError(error))
                 .finally(() => {
                     this.isLoading = false;
                 });
