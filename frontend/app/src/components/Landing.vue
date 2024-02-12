@@ -19,7 +19,7 @@
                         showSuccess(response.result.message)
                     })
                     .catch(error => {
-                        showError(this)
+                        showError()
                     })
                     .finally(() => {
                         this.isShortLoading = false
@@ -54,12 +54,9 @@
         <div class="col-12 md:col-8 md:col-offset-2">
 
             <Card>
-            <template #title>
-                <h3 class="text-center">Try it out!</h3>
-            </template>
             <template #content>
                 <div class="text-center">
-                    <p>{{ message }}</p>
+                    <h2>{{ message }}</h2>
                     <Button label="send quick api request" :loading="isShortLoading" @click="shortApiCall" />
                 </div>
                 <div class="text-center pt-4">
@@ -67,7 +64,7 @@
                 </div>
                 <div class="text-center pt-4">
                     <hr />
-                    <p>Check out the <router-link to="/notes">Notes</router-link> page for how we can fetch data from djangorestframework</p>
+                    <p>Check out the <router-link to="/notes">Notes</router-link> page for how we can fetch data from djangorestframework, protecting the route by auth.</p>
                 </div>
             </template>
             </Card>

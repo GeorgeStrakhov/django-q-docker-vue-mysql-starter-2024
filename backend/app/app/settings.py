@@ -11,23 +11,31 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+## Error handling
+def raise_error(message):
+    raise ValueError(message)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 DOMAIN = os.getenv('DOMAIN') or raise_error('DOMAIN env variable is not set')
+ROOT_DOMAIN = os.getenv('ROOT_DOMAIN') or raise_error('DOMAIN env variable is not set') # IMPORTANT! This is root domain
+MAIN_HOST = os.getenv('HOST') or raise_error('HOST env variable is not set')
+PROJECT_NAME = os.getenv('PROJECT_NAME') or raise_error('PROJECT_NAME env variable is not set')
+CONTACT_EMAIL = os.getenv('CONTACT_EMAIL') or raise_error('CONTACT_EMAIL env variable is not set')
+ACCOUNTS_EMAIL = os.getenv('ACCOUNTS_EMAIL') or raise_error('ACCOUNTS_EMAIL env variable is not set')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG') == 'True'
 DEVELOPMENT = os.getenv('ENV') == 'development'
 
 ALLOWED_HOSTS = [
-   DOMAIN
+   ROOT_DOMAIN,
+   DOMAIN,
 ]
 
 # Application definition
@@ -41,11 +49,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders', #For CORS
     'django_q', # queue stuff
-    'shared_services',
     'rest_framework',
-    'tasks',
+    'tasks', # for long running tasks
+    'accounts',
     'notes',
 ]
+
+AUTH_USER_MODEL = 'accounts.MyUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -59,17 +69,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-if not DEVELOPMENT:
-    MIDDLEWARE += ['django.middleware.csrf.CsrfViewMiddleware']
-
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "https://"+DOMAIN,
     "http://"+DOMAIN,
+    "https://"+ROOT_DOMAIN,
+    "http://"+ROOT_DOMAIN,
 ]
 
-CSRF_TRUSTED_ORIGINS=['https://*.'+DOMAIN, 'https://'+DOMAIN, 'http://*.'+DOMAIN, 'http://'+DOMAIN]
+CSRF_TRUSTED_ORIGINS=['https://*.'+ROOT_DOMAIN, 'https://'+ROOT_DOMAIN, 'http://*.'+ROOT_DOMAIN, 'http://'+ROOT_DOMAIN]
 
 CSRF_COOKIE_DOMAIN = "." + DOMAIN
 
@@ -77,12 +86,32 @@ SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SECURE = True
 
+CSRF_COOKIE_NAME = 'csrftoken'
+
 SESSION_COOKIE_AGE = 86420
 
-SESSION_COOKIE_DOMAIN = "." + DOMAIN
+SESSION_COOKIE_DOMAIN = DOMAIN
 SESSION_COOKIE_SAMESITE = 'Lax'  # Or 'Lax' or 'Strict'
 
 ROOT_URLCONF = 'app.urls'
+
+# REST Framework stuff
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+# JWT settings
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=30) if DEVELOPMENT else timedelta(minutes=15), # keep it short for development to ensure we hit corner cases
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=90) if DEVELOPMENT else timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
 
 TEMPLATES = [
     {

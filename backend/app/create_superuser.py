@@ -5,7 +5,8 @@ import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
 django.setup()
 
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from accounts.models import MyUser as User
 
 username = os.environ.get("DJANGO_SUPERUSER_USERNAME", "admin")
 email = os.environ.get("DJANGO_SUPERUSER_EMAIL", "admin@example.com")

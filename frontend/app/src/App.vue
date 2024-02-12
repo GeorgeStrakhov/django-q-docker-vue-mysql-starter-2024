@@ -6,12 +6,15 @@
         <router-view :key="$route.fullPath"></router-view>
         <Footer />
     </div>
+
+    <CookieConsent />
+
 </template>
 
 <script>
-
     import Footer from './components/Footer.vue'
     import Header from './components/Header.vue'
+    import CookieConsent from './components/CookieConsent.vue'
     import Toaster from './components/Toaster.vue'
     import GlobalLoading from './components/GlobalLoading.vue'
 
@@ -20,7 +23,8 @@
             Footer,
             Header,
             Toaster,
-            GlobalLoading
+            GlobalLoading,
+            CookieConsent
         }
     }
 

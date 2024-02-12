@@ -16,14 +16,30 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views import index_view, task_test_view, data_test_view
+from accounts.views import SignupView, VerifyEmailView, PasswordResetRequestView, PasswordResetConfirmView, CustomTokenObtainPairView, CustomTokenRefreshView
 
 urlpatterns = [
     path('api/', index_view, name='index'),
+
+    # accounts
+    path('api/signup/', SignupView.as_view(), name='signup'),
+    path('api/token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/verify/<str:uidb64>/<str:token>/', VerifyEmailView.as_view(), name='verify_email'),
+    path('api/token/refresh/', CustomTokenRefreshView.as_view(), name='token_refresh'),
+    path('api/password_reset/', PasswordResetRequestView.as_view(), name='password_reset'),
+    path('api/password_reset_confirm/<str:uidb64>/<str:token>/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+
+    # examples
     path('api/rest/notes/', include("notes.urls")),
     path('api/test_task', task_test_view, name='test_task'),
     path('api/test_data', data_test_view, name='test_data'),
-    path('api/shared_services/', include('shared_services.urls')),
+
+    # long running tasks
+    path('api/tasks/', include('tasks.urls')),
+
+    # admin
     path('api/admin/', admin.site.urls),
 ]

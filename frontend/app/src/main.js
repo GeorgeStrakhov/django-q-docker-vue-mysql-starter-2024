@@ -5,8 +5,12 @@ import App from '@/App.vue'
 import { router } from '@/router'
 import { eventBus } from '@/helpers/eventBus';
 
+//auth store
+import { useAuthStore } from '@/stores/authStore'
+
 //components that we will need globally
 import Button from "primevue/button";
+import SplitButton from 'primevue/splitbutton';
 import Image from "primevue/image";
 import Card from "primevue/card";
 import Badge from "primevue/badge";
@@ -27,11 +31,14 @@ import 'primevue/resources/themes/arya-orange/theme.css'
 // import 'primevue/resources/themes/bootstrap4-light-blue/theme.css'
 import 'primeflex/primeflex.css' //grid system
 import 'primevue/resources/primevue.min.css' //core css
+import 'primeicons/primeicons.css' //icons
 
 import Ripple from 'primevue/ripple';
 
-
 import Loading from '@/components/Loading.vue'
+import Login from '@/components/Login.vue'
+import Logout from '@/components/Logout.vue'
+import Signup from '@/components/Signup.vue'
 
 //create the app
 const app = createApp(App)
@@ -41,6 +48,7 @@ app.use(ToastService)
 
 //registering components that we need globally
 app.component('Button', Button)
+app.component('SplitButton', SplitButton)
 app.component('Badge', Badge)
 app.component('Divider', Divider)
 app.component('RadioButton', RadioButton)
@@ -56,13 +64,17 @@ app.directive('ripple', Ripple)
 
 //registering custom components to be reused
 app.component('Loading', Loading)
+app.component('Login', Login)
+app.component('Logout', Logout)
+app.component('Signup', Signup)
 
 //router
 app.use(router)
 
 //store
 app.use(createPinia());
-
+const authStore = useAuthStore()
+authStore.checkAuth();
 
 app.use(PrimeVue, {ripple: true})
 app.mount('#app')

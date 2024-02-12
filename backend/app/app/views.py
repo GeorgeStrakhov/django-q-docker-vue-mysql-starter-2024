@@ -16,13 +16,11 @@ def long_task(query):
         "message": "long task finished: " + str(query)
     }
 
-@csrf_exempt
 @unpack_request
 def task_test_view(query: str):
     task = Task.start_task(long_task, query)
     return task.initial_json_response()
 
-@csrf_exempt
 @unpack_request
 def data_test_view(request):
     logger.info(request)

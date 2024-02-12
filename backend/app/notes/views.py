@@ -9,4 +9,4 @@ from shared.permissions import IsAuthenticatedForWrite
 class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
-    permission_classes = [IsAuthenticatedForWrite]
+    #permission_classes = [IsAuthenticatedForWrite]

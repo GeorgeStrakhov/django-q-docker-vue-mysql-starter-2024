@@ -5,11 +5,9 @@ services:
   backend:
     build: ./backend
     entrypoint: ["/app/startup.sh"]
-    ports:
-      - 8000:8000
     labels:
       - traefik.enable=true
-      - traefik.http.routers.api.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)
+      - traefik.http.routers.api.rule=Host(`${ROOT_DOMAIN}`) && PathPrefix(`/api`)
       - traefik.http.routers.api.entrypoints=web
       - traefik.http.services.api.loadbalancer.server.port=8000
     depends_on:
@@ -28,6 +26,10 @@ services:
       target: build-stage
     command: ["yarn", "dev"]
     restart: always
+    environment:
+      - VITE_PROJECT_NAME=${PROJECT_NAME}
+      - VITE_CONTACT_EMAIL=${CONTACT_EMAIL}
+      - VITE_ACCOUNTS_EMAIL=${ACCOUNTS_EMAIL}
     volumes:
       - ./frontend/app:/app
       - /app/node_modules
@@ -35,7 +37,7 @@ services:
       - network1
     labels:
       - traefik.enable=true
-      - traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)
+      - traefik.http.routers.frontend.rule=Host(`${ROOT_DOMAIN}`)
       - traefik.http.routers.frontend.entrypoints=web
       - traefik.http.services.frontend.loadbalancer.server.port=5173
 

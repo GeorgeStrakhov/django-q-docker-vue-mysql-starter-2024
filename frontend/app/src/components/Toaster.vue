@@ -10,7 +10,6 @@
     const toast = useToast();
 
     const eventHandler = (payload) => {
-        console.log(payload);
         toast.add({severity: payload.severity, summary: payload.summary, detail: payload.detail, life: payload.life});
     };
 

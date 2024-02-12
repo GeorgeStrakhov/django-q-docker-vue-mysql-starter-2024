@@ -11,7 +11,6 @@ export const useLoadingStore = defineStore('loading', {
     actions: {
         // Method to show the loading screen by setting isLoading to true
         showLoading(loadingMessage) {
-            console.log('loadingMessage', loadingMessage);
             this.isLoading = true;
             this.loadingMessage = loadingMessage;
         },
