@@ -25,3 +25,10 @@
 - all env variables are in the top level .env file and then exposed to each container via docker-compose environment instructions
 
 *NB!* when installing packages for front or back - if you don't want to rebuild the dockerfile, then just `docker-exec` into a running container and `yarn add` or `pip install` from there
+
+## TODO
+
+- catch a weird corner case bug that password reset sometimes gives a refresh token error if previously logged in (solved by page reload)
+- implement user settings page
+- implement stripe payments and plans
+- test deployments
