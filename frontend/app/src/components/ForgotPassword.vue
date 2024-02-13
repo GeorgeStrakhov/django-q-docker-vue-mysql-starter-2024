@@ -65,7 +65,7 @@
     const sendReset = () => {
         eventBus.emit('show-loading', 'Sending password reset instructions if the user exists...')
 
-        apiPost('/password_reset/', { email: email.value })
+        apiPost('/password_reset/', { email: email.value, _isResetPassword: true })
         .then( (response) => {
             console.log(response)
             //eventBus.emit('toast', { severity: 'success', detail: 'If the user with such email exists, then the password reset instructions are sent to your email.', life: 5000 });

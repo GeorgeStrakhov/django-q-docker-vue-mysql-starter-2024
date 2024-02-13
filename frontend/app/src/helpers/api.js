@@ -67,7 +67,7 @@ api.interceptors.response.use((response) => {
         return Promise.reject('Your session has expired. Please log in again.');
     }
     //if the error is 401 and the request has not been retried - this is for refreshing the token
-    if (error.response.status === 401 && !requestData._isLogin) { //disable for login
+    if (error.response.status === 401 && !requestData._isLogin && !requestData._isSignup && !requestData._isResetPassword) { //disable for login and signup
         //not retrying - then we just need to refresh token
         if(!originalRequest._retry) {
             console.log('access token expired, refreshing...')
@@ -147,8 +147,9 @@ const makeRequest = async (method, url, data = null) => {
 };
 
 const apiPost = (url, data) => makeRequest('post', url, data);
+const apiPut = (url, data) => makeRequest('put', url, data);
 const apiGet = (url) => makeRequest('get', url);
-
+const apiDelete = (url) => makeRequest('delete', url);
 
 const showError = (error="something went wrong") => {
     console.log(error);
@@ -161,4 +162,4 @@ const showSuccess = (message="it worked!") => {
     eventBus.emit('toast', payload);
 };
 
-export { apiPost, apiGet, showError, showSuccess };
+export { apiPost, apiGet, apiPut, apiDelete, showError, showSuccess };

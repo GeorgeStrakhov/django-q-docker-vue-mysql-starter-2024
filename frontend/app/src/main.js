@@ -23,9 +23,12 @@ import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import RadioButton from 'primevue/radiobutton';
 import FileUpload from 'primevue/fileupload';
+import Paginator from 'primevue/paginator';
+import ConfirmPopup from 'primevue/confirmpopup';
 
 //services
 import ToastService from 'primevue/toastservice';
+import ConfirmationService from 'primevue/confirmationservice';
 
 //import 'primevue/resources/themes/lara-dark-teal/theme.css' //theme
 import 'primevue/resources/themes/arya-orange/theme.css'
@@ -48,6 +51,7 @@ const app = createApp(App)
 
 //custom services
 app.use(ToastService)
+app.use(ConfirmationService);
 
 //registering components that we need globally
 app.component('Button', Button)
@@ -64,6 +68,9 @@ app.component('ProgressSpinner', ProgressSpinner)
 app.component('Panel', Panel)
 app.component('Textarea', Textarea)
 app.component('Dialog', Dialog)
+app.component('ConfirmPopup', ConfirmPopup)
+
+//ripple directive
 app.directive('ripple', Ripple)
 
 //registering custom components to be reused

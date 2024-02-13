@@ -8,6 +8,7 @@ class AuthService {
         return apiPost('signup/', {
             email: email,
             password: password,
+            _isSignup: true, // to disable the token refresh when signing up
         });
     }
 

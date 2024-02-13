@@ -106,6 +106,8 @@ REST_FRAMEWORK = {
     ),
 }
 
+APPEND_SLASH=False
+
 # JWT settings
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(seconds=30) if DEVELOPMENT else timedelta(minutes=15), # keep it short for development to ensure we hit corner cases

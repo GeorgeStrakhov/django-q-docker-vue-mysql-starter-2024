@@ -4,7 +4,8 @@ import { useAuthStore } from '@/stores/authStore'
 //app components
 import Landing from './components/Landing.vue'
 import NotFound from './components/NotFound.vue'
-import Notes from './components/notes/Notes.vue'
+import NotesList from './components/notes/NotesList.vue'
+import Note from './components/notes/Note.vue'
 import AddNote from './components/notes/AddNote.vue'
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
@@ -20,7 +21,8 @@ const routes = [
     { path: '/verify/:uid?/:token?', name: 'VerifyEmail', component: VerifyEmail, props: true },
     { path: '/forgotpassword', name: 'ForgotPassword', component: ForgotPassword },
     { path: '/resetpassword/:uid/:token', name: 'ResetPassword', component: ResetPassword, props: true },
-    { path: '/notes', name: 'Notes', component: Notes, meta: { requiresAuth: true } },
+    { path: '/notes', name: 'NotesList', component: NotesList, meta: { requiresAuth: true } },
+    { path: '/notes/:id', name: 'Note', component: Note, meta: { requiresAuth: true }, props: true },
     { path: '/add-note', name: 'AddNote', component: AddNote, meta: { requiresAuth: true } },
     { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
 ]

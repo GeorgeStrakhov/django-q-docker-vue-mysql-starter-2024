@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="pb-4">
         <div v-if="imgUrl">
             <div class="image-container">
                 <img :src="imgUrl" alt="Uploaded image" width="200" />
@@ -7,57 +7,69 @@
             </div>
         </div>
         <div v-else>
-            <FileUpload mode="basic" name="img_upload" url="/api/img_upload/" @beforeUpload="showLoading" @upload="onUpload" accept="image/*" :fileLimit="1" :maxFileSize="maxFileSize" :auto="true" />
+            <FileUpload
+                mode="basic"
+                name="img_upload"
+                url="/api/img_upload/"
+                @beforeUpload="showLoading"
+                @upload="onUpload"
+                accept="image/*"
+                :fileLimit="1"
+                :maxFileSize="maxFileSize"
+                :auto="true" />
         </div>
     </div>
 </template>
 
-<script>
-import FileUpload from 'primevue/fileupload';
-import { eventBus } from '@/helpers/eventBus';
+<script setup>
+    import { ref, watch } from 'vue';
+    import FileUpload from 'primevue/fileupload';
+    import { eventBus } from '@/helpers/eventBus';
+    import { defineProps, defineEmits } from 'vue';
 
-export default {
-    components: {
-        FileUpload,
-    },
-    props: {
-        initialImgUrl: {
-            type: String,
-            default: '',
-        },
+    const props = defineProps({
+        modelValue: String,
         maxFileSize: {
             type: Number,
             default: 2000000, // 2MB default max file size
         },
-    },
-    data() {
-        return {
-            imgUrl: this.initialImgUrl,
-        };
-    },
-    methods: {
-        showLoading() {
-            eventBus.emit('show-loading', 'Uploading image...');
-        },
-        onUpload(event) {
-            const response = JSON.parse(event.xhr.response);
-            this.imgUrl = response.url;
-            this.$emit('update:imgUrl', this.imgUrl); // Emit an event to update the parent component
-            eventBus.emit('hide-loading');
-        },
-        handleClearImage() {
-            this.imgUrl = '';
-            this.$emit('update:imgUrl', this.imgUrl); // Clear the image and notify the parent component
-        },
-    },
-};
+    });
+
+    const emit = defineEmits(['update:modelValue']);
+
+    const imgUrl = ref(props.modelValue);
+
+    // Ensure imgUrl is reactive to parent changes
+    watch(() => props.modelValue, (newValue) => {
+        imgUrl.value = newValue;
+    });
+
+    // When imgUrl changes internally, emit the change
+    watch(imgUrl, (newValue) => {
+        emit('update:modelValue', newValue);
+    });
+
+    const showLoading = () => {
+        eventBus.emit('show-loading', 'Uploading image...');
+    };
+
+    const onUpload = (event) => {
+        const response = JSON.parse(event.xhr.response);
+        imgUrl.value = response.url; // This will trigger the watcher and emit the update
+        eventBus.emit('hide-loading');
+    };
+
+    const handleClearImage = () => {
+        imgUrl.value = ''; // This will also trigger the watcher and emit the update
+    };
 </script>
 
+
 <style scoped>
-.image-container {
-    position: relative;
-    display: block; 
-}
+    .image-container {
+        position: relative;
+        display: block; 
+    }
 
     .delete-icon {
         position: absolute;

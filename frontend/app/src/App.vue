@@ -1,9 +1,12 @@
 <template>
     <Toaster />
     <GlobalLoading />
+    <ConfirmPopup></ConfirmPopup>
     <div class="container">
         <Header />
-        <router-view :key="$route.fullPath"></router-view>
+        <div class="p-4 lg:p-6">
+            <router-view :key="$route.fullPath"></router-view>
+        </div>
         <Footer />
     </div>
 
