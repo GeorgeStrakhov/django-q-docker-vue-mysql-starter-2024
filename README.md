@@ -28,9 +28,6 @@
 
 ## TODO
 
-- create note with Image Upload
-- implement notes list and individual note view with pagination
-- catch a weird corner case bug that password reset sometimes gives a refresh token error if previously logged in (solved by page reload)
 - implement user settings page
 - implement stripe payments and plans
 - test deployments
