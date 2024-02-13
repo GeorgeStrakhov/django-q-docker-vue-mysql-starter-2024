@@ -13,6 +13,7 @@ done
 echo "MySQL is up - executing command"
 
 # Apply database migrations and create superuser
+python manage.py makemigrations
 python manage.py migrate
 python create_superuser.py
 

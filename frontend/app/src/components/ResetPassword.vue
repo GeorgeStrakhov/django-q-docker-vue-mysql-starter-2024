@@ -14,7 +14,6 @@
                                 id="password"
                                 aria-describedby="password-help"
                                 type="password"
-                                @keyup.enter="onSubmit"
                                 class="w-full mb-1"
                                 :class="{ 'p-invalid': errors.email }"
                                 />

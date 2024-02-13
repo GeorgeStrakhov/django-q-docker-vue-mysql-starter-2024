@@ -22,6 +22,7 @@ import Panel from 'primevue/panel';
 import Dialog from 'primevue/dialog';
 import Toast from 'primevue/toast';
 import RadioButton from 'primevue/radiobutton';
+import FileUpload from 'primevue/fileupload';
 
 //services
 import ToastService from 'primevue/toastservice';
@@ -39,6 +40,8 @@ import Loading from '@/components/Loading.vue'
 import Login from '@/components/Login.vue'
 import Logout from '@/components/Logout.vue'
 import Signup from '@/components/Signup.vue'
+import EasyInput from '@/components/helpers/EasyInput.vue'
+import EasyImageUpload from '@/components/helpers/EasyImageUpload.vue'
 
 //create the app
 const app = createApp(App)
@@ -52,6 +55,7 @@ app.component('SplitButton', SplitButton)
 app.component('Badge', Badge)
 app.component('Divider', Divider)
 app.component('RadioButton', RadioButton)
+app.component('FileUpload', FileUpload)
 app.component('Toast', Toast)
 app.component('Image', Image)
 app.component('Card', Card)
@@ -67,6 +71,8 @@ app.component('Loading', Loading)
 app.component('Login', Login)
 app.component('Logout', Logout)
 app.component('Signup', Signup)
+app.component('EasyInput', EasyInput)
+app.component('EasyImageUpload', EasyImageUpload)
 
 //router
 app.use(router)

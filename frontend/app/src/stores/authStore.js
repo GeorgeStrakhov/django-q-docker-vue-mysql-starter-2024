@@ -30,6 +30,8 @@ export const useAuthStore = defineStore('auth', {
             } else {
                 this.user = null
                 this.isLoggedIn = false
+                //making sure we don't have any token in local storage lingering around
+                AuthService.logout()
             }
         }
     }

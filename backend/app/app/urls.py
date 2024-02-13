@@ -20,6 +20,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .views import index_view, task_test_view, data_test_view
 from accounts.views import SignupView, VerifyEmailView, PasswordResetRequestView, PasswordResetConfirmView, CustomTokenObtainPairView, CustomTokenRefreshView
+from files.views import ImgUploadView
 
 urlpatterns = [
     path('api/', index_view, name='index'),
@@ -39,6 +40,9 @@ urlpatterns = [
 
     # long running tasks
     path('api/tasks/', include('tasks.urls')),
+
+    # file uploads
+    path('api/img_upload/', ImgUploadView.as_view(), name='img_upload'),
 
     # admin
     path('api/admin/', admin.site.urls),

@@ -13,6 +13,9 @@
                             {{ note.title }}
                         </li>
                     </ul>
+                    <div>
+                        <router-link to="/add-note" class="p-button">Add a new Note</router-link>
+                    </div>  
                 </div>
             </div>
         </div>
@@ -20,7 +23,7 @@
 </template>
 
 <script>
-    import { apiGet, showError, showSuccess } from '../helpers/api.js'
+    import { apiGet, showError, showSuccess } from '@/helpers/api.js'
     export default {
         data() {
             return {
@@ -33,9 +36,6 @@
             apiGet('rest/notes')
                 .then(response => {
                     this.notes = response;
-                    if (this.notes.length === 0) {
-                        showError('No notes found in the database. Please add some via the admin at /api/admin/.');
-                    }
                 })
                 .catch(error => showError(error))
                 .finally(() => {

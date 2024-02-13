@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django_q', # queue stuff
     'rest_framework',
     'tasks', # for long running tasks
+    'files', # for file uploads
     'accounts',
     'notes',
 ]
@@ -95,7 +96,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'  # Or 'Lax' or 'Strict'
 
 ROOT_URLCONF = 'app.urls'
 
-# REST Framework stuff
+# REST Framework authentication and permission settings
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
